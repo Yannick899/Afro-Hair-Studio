@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hamburger.addEventListener('click', () => {
         navUl.classList.toggle('active');
+        hamburger.classList.toggle('toggle');
     });
 
     // Buchungsformular Validierung
@@ -32,10 +33,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Smooth Scroll für Navigationslinks
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                // Schließe das Menü nach dem Klick (für mobile Geräte)
+                navUl.classList.remove('active');
+                hamburger.classList.remove('toggle');
+            }
+        });
+    });
 });
 
 // Funktion für den "Jetzt Buchen" Button im Header
 function scrollToBooking() {
-    const bookingSection = document.querySelector('#booking');
+    const bookingSection = document.querySelector('.booking-form-area');
     bookingSection.scrollIntoView({ behavior: 'smooth' });
 }
